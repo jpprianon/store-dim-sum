@@ -10,27 +10,37 @@ import { useUserContext } from '../context/user_context'
 
 const Nav = () => {
   const {openSidebar} = useProductsContext()
-  return <NavContainer><div className='nav-center'>
-    <div className='nav-header'>
-      <Link to="/">
-        <img src={logo} alt="dim sum logo" />
-      </Link>
-      <button type='button' className='nav-toggle' onClick={openSidebar}>
-        <FaBars />
-      </button>
-    </div>
-    <ul className='nav-links'>
-      {links.map((link)=>{
-        const { id, text, url } = link
-        return (
-          <li key={id}>
-            <Link to={url}>{text}</Link>
-          </li>
-        )
-      })}
-    </ul>
-  </div>
-  </NavContainer>
+  const {myUser} = useUserContext()
+  return (
+    <NavContainer>
+      <div className="nav-center">
+        <div className="nav-header">
+          <Link to="/">
+            <img src={logo} alt="dim sum logo" />
+          </Link>
+          <button type="button" className="nav-toggle" onClick={openSidebar}>
+            <FaBars />
+          </button>
+        </div>
+        <ul className="nav-links">
+          {links.map((link) => {
+            const { id, text, url } = link;
+            return (
+              <li key={id}>
+                <Link to={url}>{text}</Link>
+              </li>
+            );
+          })}
+          {myUser && (
+            <li>
+              <Link to="/checkout">paiement</Link>
+            </li>
+          )}
+        </ul>
+        <CartButtons />
+      </div>
+    </NavContainer>
+  );
 }
 
 const NavContainer = styled.nav`
